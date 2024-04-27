@@ -1,0 +1,8 @@
+{% extends 'layout.html' %} {% block main %}
+
+{% if username %}
+<h1>Welcome, {{username}} to the App!</h1>
+{% else %}
+<h1>Welcome to the App!</h1>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Ubuntu', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color:inherit;
+}
+
+header {
+	height: 80px;
+	padding: 24px 48px;
+	background: rgba(10,10,10,0.7);
+	display: flex;
+	flex-flow: row;
+	justify-content:space-between;
+	align-items: center;
+}
+
+header nav {
+	color: white;
+}
+
+header nav ul {
+ display: flex;
+ flex-flow: row nowrap;
+ gap:2px;
+ list-style: none;
+}
+
+header ul li a {
+	padding: 4px 12px;
+	cursor: pointer;
+	border-radius: 12px;
+}
+
+header li a:hover {
+	background: lightblue;
+}
+
+main {
+	
+}

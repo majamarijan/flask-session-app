@@ -1,0 +1,14 @@
+<nav>
+<ul>
+	<li><a href="{{url_for('index')}}">Home</a></li>
+	<li><a href="{{url_for('about')}}">About</a></li>
+	<li>
+		{% if username %}
+		<a href="{{url_for('logout')}}">Logout</a>
+
+		{% else %}
+		<a href='{{url_for("login")}}'>Login</a>
+		{% endif %}
+	</li>
+</ul>
+</nav>

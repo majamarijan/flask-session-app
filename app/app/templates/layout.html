@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}" />
+		<title>{{title}}</title>
+	</head>
+	<body>
+		<header>
+			<div class="logo">
+				<img src="{{url_for('static',filename='logo.png')}}" width='50' height='50' />	
+			</div>
+			{% include 'components/navigation.html' %}
+		</header>
+		<main>{% block main %}{% endblock %}</main>
+		<script src="{{url_for('static',filename='main.js')}}"></script>
+	</body>
+</html>
