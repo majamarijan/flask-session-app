@@ -1,6 +1,8 @@
 from flask import Flask, session, render_template, url_for, redirect, request,jsonify, make_response
+from .utils import generateID, findUser
 
 visitedCounter=0
+users=[]
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -14,17 +16,19 @@ def create_app():
         else:
             visited=visitedCounter+1
         username=''
-        # if 'username' in session
-        if session.get('username'):
-            username=session['username']
-        # print(session.get('username'))
+        print(users)
+        # if 'session_id' in session
+        if len(users) > 0:
+            # username=findUser(session.get('session_id'),users)
+            for user in users:
+                if user['session_id'] == session.get('session_id'):
+                 username=user['username']
         res = make_response(render_template('index.html', username=username, title='Session App'))
         res.set_cookie('Visited', str(visited) , max_age=3600, secure=True, httponly=True)
         return res
 
     @app.get('/about')
     def about():
-        print(session.get('username'))
         return render_template('about.html', title='About')
 
     @app.get('/login')
@@ -36,8 +40,9 @@ def create_app():
         data = request.json
         try:
             if data.get('username') != '' and data.get('password') != '':
-                session['username'] = data.get('username')
-                print(request.json)
+                user_id = generateID(data.get('username'))
+                session['session_id']=generateID(user_id)
+                users.append({"username":data.get('username'), "password":data.get('password'), "user_id":user_id, "session_id":session.get('session_id')})
                 return jsonify({"message":"OK"})
         except ValueError:
             return 'Something went wrong'
@@ -49,8 +54,11 @@ def create_app():
     @app.get('/logout')
     def logout():
         data=''
-        if session.get('username'):
-            session.pop('username',default=None)
+        if session.get('session_id'):
+            session.pop('sesssion_id',default=None)
+            for user in users:
+                if user['session_id'] == session.get('session_id'):
+                    users.remove(user)
         return redirect(url_for('index'))
 
     if __name__ == "__main__":
