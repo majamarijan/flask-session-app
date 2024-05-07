@@ -16,8 +16,8 @@ def create_app():
         else:
             visited=visitedCounter+1
         username=''
+        print(session)
         print(users)
-        # if 'session_id' in session
         if len(users) > 0:
             # username=findUser(session.get('session_id'),users)
             for user in users:
@@ -55,10 +55,10 @@ def create_app():
     def logout():
         data=''
         if session.get('session_id'):
-            session.pop('sesssion_id',default=None)
             for user in users:
                 if user['session_id'] == session.get('session_id'):
                     users.remove(user)
+                    session.pop('session_id',default=None)
         return redirect(url_for('index'))
 
     if __name__ == "__main__":
