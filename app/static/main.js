@@ -1,6 +1,7 @@
 window.onload = () => {
 	const form = document.querySelector("form") || null;
 	const themeBtn = document.querySelector("input[type='checkbox']");
+	let theme = '';
 
 	if (form) {
 		let data = {};
@@ -23,21 +24,24 @@ window.onload = () => {
 		};
 	}
 	if (window.localStorage.getItem("theme")) {
-		let theme = window.localStorage.getItem("theme");
-		document.body.classList.add(theme);
-		themeBtn.checked = true;
+		let currentTheme = window.localStorage.getItem("theme");
+		document.body.classList.add(currentTheme);
+		themeBtn.checked = currentTheme === 'dark' ? true : false;
+		theme = currentTheme;
 	}
-	themeController(themeBtn);
+	window.localStorage.setItem('theme',theme)
+	themeController(themeBtn, theme);
 };
 
-function themeController(themeBtn) {
+function themeController(themeBtn, theme) {
 	themeBtn.addEventListener("change", (e) => {
-		if (themeBtn.checked) {
-			document.body.classList.add("dark");
-			window.localStorage.setItem("theme", "dark");
-		} else {
-			document.body.classList.remove("dark");
-			window.localStorage.removeItem("theme");
+		console.log()
+		if(themeBtn.checked) {
+			document.body.classList.add('dark');
+			window.localStorage.setItem('theme', 'dark');
+		}else {
+			document.body.classList.remove('dark');
+			window.localStorage.setItem('theme','light')
 		}
 	});
 }

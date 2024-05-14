@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}{% block main %}
+
+<article>
+	{{post.title}} {% markdown %}{{post.content}}{% endmarkdown %}
+</article>
+{% endblock %}

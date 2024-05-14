@@ -2,6 +2,7 @@
 	<ul>
 		<li><a href="{{url_for('index')}}">Home</a></li>
 		<li><a href="{{url_for('about')}}">About</a></li>
+		<li><a href="{{url_for('blogs')}}">Blogs</a></li>
 		<li>
 			{% if username %}
 			<a href="{{url_for('logout')}}">Logout</a>
