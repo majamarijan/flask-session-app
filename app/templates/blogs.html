@@ -1,13 +1,17 @@
 {% extends "layout.html" %}{% block main %}
 
 <h1>Blogs</h1>
-{% for blog in blogs%} 
-<div class='blog'>
-	<h2>{{blog.title}}</h2>
-	<p>date: {{blog.date}}</p>
-	<p>{{blog.dscription}}</p>
-	<p>author: {{blog.author}}</p>
-</div>
-{% endfor %}
+{% if blogs|length == 0 %}
+<p>No blogs found</p>
+{% else %} {% for blog in blogs %}
+<a href="{{url_for('get_blog', name=blog.metadata.get('title').lower())}}">
+	<div class="blogs_item">
+		<h2>{{blog.title}}</h2>
+		<p>id: {{blog.metadata.get('id')}}</p>
+		<p>date: {{blog.date}}</p>
+		<p>{{blog.dscription}}</p>
+		<p>author: {{blog.author}}</p>
+	</div>
+</a>
 
-{% endblock %}
+{% endfor %}{% endif %} {% endblock %}

@@ -1,3 +1,17 @@
+:root[data-theme='dark'] {
+	--background: #212121;
+	--color: white;
+	background: var(--background);
+	color: var(--color);
+}
+
+:root[data-theme='light'] {
+	--background: white;
+	--color: black;
+	background: var(--background);
+	color: var(--color);
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -5,14 +19,8 @@
 }
 
 body {
-	font-family: "Ubuntu", sans-serif;
-	color: #1c1b1b;
-	background: white;
-}
-
-.dark {
-	background: #212121;
-	color: white;
+	font-family: 'Ubuntu', sans-serif;
+	color: inherit;
 }
 
 a {
@@ -55,8 +63,6 @@ header li a:hover {
 main {
 }
 
-
-
 header .switch {
 	font-size: 17px;
 	position: relative;
@@ -87,7 +93,7 @@ header .switch input {
 
 .slider:before {
 	position: absolute;
-	content: "";
+	content: '';
 	height: 1.4em;
 	width: 1.4em;
 	border-radius: 50%;
@@ -112,4 +118,45 @@ header .switch input {
 
 .switch input:checked + .slider:before {
 	transform: translateX(1.5em);
+}
+
+/* BLOG */
+.blog {
+	background: inherit;
+	padding: 4rem 48px;
+}
+
+.blog h1 {
+	font-size: clamp(2.5rem, 5vw, 4rem);
+	padding-block:24px;
+}
+
+.blog h2 {
+	font-size: clamp(1.6rem, 5vw, 2rem);
+}
+
+.blog p {
+	line-height: 1.5;
+	padding-block: 24px;
+}
+
+
+article ul {
+	list-style: none;
+}
+
+article ul a {
+	display: block;
+	padding-block: 16px;
+	color: lightgreen;
+	cursor: pointer;
+}
+
+article ul a:hover {
+	color: rgb(43, 250, 43)
+}
+
+article ul a:focus {
+	color: rgb(232, 237, 232);
+	font-weight: bold;
 }

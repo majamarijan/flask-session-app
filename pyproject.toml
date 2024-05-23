@@ -9,6 +9,11 @@ packages=[{include="app"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 flask = "^3.0.3"
+markdown = "^3.6"
+jinja-markdown = "^1.210911"
+flask-flatpages = "^0.8.2"
+python-frontmatter = "^1.1.0"
+mistune = "^3.0.2"
 
 
 [build-system]

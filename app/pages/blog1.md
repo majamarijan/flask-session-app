@@ -1,10 +1,12 @@
 ---
 title: Blog1
-description: This is simple blog post
-author: Adam
-date: 2024-04-12
+author: Maja
+date: 2024-05-04
+image: logo.png
+id: da88bd93-1306-4b2d-9623-61c2445f0d29
 ---
 
-# This is Blog 1
+# Blog 1
 
-Hello World!
+This is the first blog with some content.
+![Alt](/static/logo.png)

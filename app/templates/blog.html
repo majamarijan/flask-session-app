@@ -1,0 +1,6 @@
+{% extends "layout.html"%}{% block main %}
+<article class="blog">
+  {% markdown %}{{content|safe}}{% endmarkdown %}
+</article>
+
+{% endblock %}

@@ -8,11 +8,12 @@ from flask_flatpages.utils import pygmented_markdown
 import glob
 import frontmatter
 from datetime import datetime
+import uuid
+import mistune
 
 pages=FlatPages()
 posts=glob.glob(os.getcwd()+'/app/pages/*.md')
-
-
+blogs_posts=[]
 visitedCounter=0
 users=[]
 
@@ -27,6 +28,22 @@ def create_app():
     def html_renderer(text):
         body=render_template_string(text)
         return pygmented_markdown(body)
+    
+    # app.add_template_filter(html_renderer,'markdown')
+    # generate uuid for the markdown files in pages
+   
+    # def generate_uuid():
+    #     for post in posts:
+    #         with open(post,'r') as file:
+    #             blog=frontmatter.load(file)
+    #             dt=datetime.strftime(blog.metadata.get('date'), "%d. %B, %Y")
+    #             blog.metadata['date'] = dt
+    #             blog.metadata['id']= uuid.uuid4()
+    #             blogs_posts.append(blog)
+    #     return blogs_posts
+    # generate_uuid()
+    def getCookies(str):
+        return request.cookies.get(str)
     
     @app.get('/')
     def index():
@@ -44,7 +61,7 @@ def create_app():
                 if user['session_id'] == session.get('session_id'):
                  username=user['username']
         res = make_response(render_template('index.html', username=username, title='Session App'))
-        res.set_cookie('Visited', str(visited) , max_age=3600, secure=True, httponly=True)
+        res.set_cookie('Visited', str(visited) , max_age=3600, secure=True, httponly=True, samesite='strict')
         return res
 
     @app.get('/about')
@@ -61,15 +78,26 @@ def create_app():
 
     @app.get('/blogs')
     def blogs():
-        blogs=[]
+        blogPosts=[]
         for post in posts:
-            with open(str(post), 'r') as file:
-                blog = frontmatter.load(file)
-                dt=datetime.strftime(blog.metadata.get('date'), "%d. %B, %Y")
-                blog.metadata['date'] = dt
-                blogs.append(blog)
-        
-        return render_template('blogs.html', blogs=blogs)
+                blog=frontmatter.load(post)
+                blog.metadata['date'] = datetime.strftime(blog.metadata.get('date'), "%d. %B, %Y")
+                blogPosts.append(blog)
+        if len(blogPosts) > 0:
+            return render_template('blogs.html',blogs=blogPosts)
+        return 'hello'
+    
+    @app.get('/blogs/blog/<string:name>')
+    def get_blog(name):
+        for post in posts:
+            postName = os.path.basename(post).split('.')[0]
+            if postName.lower() == name.lower():
+                with open(post,'r') as file:
+                    blog=frontmatter.load(file)
+                    html=markdown.markdown(blog.content)
+                    return render_template('blog.html',content=html,data=blog.metadata)
+      
+        return 'blog '+name
 
     @app.get('/login')
     def login():
@@ -100,6 +128,9 @@ def create_app():
                     users.remove(user)
                     session.pop('session_id',default=None)
         return redirect(url_for('index'))
+    
+    # with app.test_request_context():
+    #     print(url_for("get_blog", id='1'))
 
     if __name__ == "__main__":
         app.run()
